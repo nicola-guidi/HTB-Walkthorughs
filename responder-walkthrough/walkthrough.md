@@ -57,7 +57,7 @@ To enumerate the technologies used by the web server, I utilized **Wappalyzer**,
 
 ## Web Enumeration
 
-After identifying that the web server was running `Apache` on Windows at port `80`, I started by browsing the site manually. While there were no useful results from directory brute-forcing with tools like **gobuster**, one particular feature on the homepage caught my attention: a language selection menu. 
+After identifying that the web server was running `Apache` on Windows at port `80`, I started by browsing the site manually. While there were no useful results from directory brute-forcing with tools like **gobuster**, one particular feature on the homepage caught my attention: **a language selection menu**. 
 
 ![Language Selection](images/language-selection.png)
 
