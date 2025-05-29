@@ -51,7 +51,7 @@ This port is associated with `Windows Remote Management (WinRM)` and confirms th
 
 To enumerate the technologies used by the web server, I utilized `Wappalyzer`, which confirmed the same information gathered with Nmap. This reinforced the initial findings and helped validate the target’s technology stack.
 
-![image.png](attachment:aa033ede-9bc6-490b-9cff-92273de9c4d9:image.png)
+![Web Technologies](images/web-technologies.png)
 
 ## Web Enumeration
 
