@@ -1,3 +1,5 @@
+![Archetype Header](images/header.png)
+
 # Introduction
 
 As part of the `Starting Point Tier 2` series on Hack The Box, `Archetype` is a Windows-based machine designed to introduce beginners to fundamental enumeration and exploitation techniques in an Windows environment. Although it carries a Very Easy rating, it provides a great learning opportunity by requiring users to chain together different steps like SMB enumeration, SQL Server exploitation, and privilege escalation.
