@@ -328,7 +328,7 @@ winPEASx64.exe
 
 During the enumeration, `WinPEAS` draws our attention to a PowerShell command history file located at `C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt`.
 
-![WinEnum Output](/images/winenum.png)
+![WinEnum Output](images/winenum.png)
 
 We read the contents of this file. Inside, we find a command that includes sensitive credentials. 
 
@@ -354,11 +354,11 @@ evil-winrm -u administrator -p 'MEGACORP_4dm1n!!' -i 10.129.188.82
 
 Once connected, we’re in as `Administrator` — the highest privilege level available on the machine. At this point, we have full control over the system.
 
-![Connecting with evil-winrm](/images/evilwinrm.png)
+![Connecting with evil-winrm](images/evilwinrm.png)
 
 With administrator access, the final flag (`root.txt` or equivalent) can typically be found in the Administrator's Desktop or another secure location. 
 
-![flag](/images/rootflag.png)
+![flag](images/rootflag.png)
 
 ## Conclusion
 
