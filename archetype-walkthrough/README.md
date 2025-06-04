@@ -139,14 +139,9 @@ Listing the directory inside this share reveals a configuration file. Inspecting
 
 ```
 cat prod.dtsConfig 
-<DTSConfiguration>
-    <DTSConfigurationHeading>
-        <DTSConfigurationFileInfo GeneratedBy="..." GeneratedFromPackageName="..." GeneratedFromPackageID="..." GeneratedDate="20.1.2019 10:01:34"/>
-    </DTSConfigurationHeading>
-    <Configuration ConfiguredType="Property" Path="\Package.Connections[Destination].Properties[ConnectionString]" ValueType="String">
+...SNIP...
         <ConfiguredValue>Data Source=.;Password=M3g4c0rp123;User ID=ARCHETYPE\sql_svc;Initial Catalog=Catalog;Provider=SQLNCLI10.1;Persist Security Info=True;Auto Translate=False;</ConfiguredValue>
-    </Configuration>
-</DTSConfiguration> 
+...SNIP...
 ```
 
 # Exploitation
